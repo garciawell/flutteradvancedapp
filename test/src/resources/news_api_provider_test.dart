@@ -5,9 +5,15 @@ import 'package:http/http.dart';
 import 'package:http/testing.dart';
 
 void main() {
-  test('Should be able to fectchTopIds and return list of ids', () {
-    final sum = 1 + 3;
+  test('Should be able to fectchTopIds and return list of ids', () async {
+    final newsApi = NewsApiProvider();
 
-    expect(sum, 4);
+    newsApi.client = MockClient((request) async {
+      return Response(json.encode([1, 2, 3, 4]), 200);
+    });
+
+    final ids = await newsApi.fechTopIds();
+
+    expect(ids, [1, 2, 3, 4]);
   });
 }
