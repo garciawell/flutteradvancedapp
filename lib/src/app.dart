@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'screens/home.dart';
 
 class App extends StatelessWidget {
   Widget build(context) {
@@ -8,7 +7,12 @@ class App extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Home(),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Home'),
+        ),
+        body: Text('TESTEEE'),
+      ),
     );
   }
 }
