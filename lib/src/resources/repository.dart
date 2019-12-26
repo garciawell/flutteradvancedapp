@@ -8,7 +8,7 @@ class Repository {
   NewsApiProvider apiProvider = NewsApiProvider();
 
   Future<List<int>> fetchTopIds() {
-    return apiProvider.fechTopIds();
+    return apiProvider.fetchTopIds();
   }
 
   Future<ItemModel> fetchItem(int id) async {
@@ -18,9 +18,16 @@ class Repository {
       return item;
     }
 
-    item = await apiProvider.fechItem(id);
+    item = await apiProvider.fetchItem(id);
     dbProvider.addItem(item);
 
     return item;
   }
 }
+
+abstract class Source {
+  Future<List<int>> fetchTopIds();
+  Future<ItemModel> fetchItem(int id);
+}
+
+abstract class Cache {}
