@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
+import 'screens/news_list.dart';
 
 class App extends StatelessWidget {
   Widget build(context) {
     return MaterialApp(
-      title: 'Animation',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Home'),
-        ),
-        body: Text('TESTEEE'),
-      ),
+      title: 'News',
+      home: NewsList(),
     );
   }
 }
