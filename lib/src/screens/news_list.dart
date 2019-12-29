@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:formflutter/src/blocs/stories_bloc.dart';
 import '../blocs/stories_provider.dart';
+import '../widgets/news_list_title.dart';
 
 class NewsList extends StatelessWidget {
   Widget build(context) {
@@ -26,7 +27,9 @@ class NewsList extends StatelessWidget {
         return ListView.builder(
           itemCount: snapshot.data.length,
           itemBuilder: (contenxt, int index) {
-            return Text('${snapshot.data[index]}');
+            return NewsListTitle(
+              itemId: snapshot.data[index],
+            );
           },
         );
       },
