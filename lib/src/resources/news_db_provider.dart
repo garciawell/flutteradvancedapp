@@ -19,7 +19,7 @@ class NewsDbProvider implements Source, Cache {
 
   void init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, "items.db");
+    final path = join(documentsDirectory.path, "items4.db");
 
     db = await openDatabase(path, version: 1,
         onCreate: (Database newDb, int version) {
@@ -59,7 +59,11 @@ class NewsDbProvider implements Source, Cache {
   }
 
   Future<int> addItem(ItemModel item) {
-    return db.insert('Items', item.toMap());
+    return db.insert(
+      'Items',
+      item.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.ignore,
+    );
   }
 }
 
