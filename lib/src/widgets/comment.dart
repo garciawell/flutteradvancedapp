@@ -1,29 +1,41 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../models/item_model.dart';
+import 'loading_container.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class Comment extends StatelessWidget {
   final int itemId;
   final Map<int, Future<ItemModel>> itemMap;
+  final int depth;
 
-  Comment({this.itemId, this.itemMap});
+  Comment({this.itemId, this.itemMap, this.depth});
 
   Widget build(context) {
     return FutureBuilder(
       future: itemMap[itemId],
       builder: (context, AsyncSnapshot<ItemModel> snapshot) {
         if (!snapshot.hasData) {
-          return Text('Still loading comment!');
+          return LoadingContainer();
         }
-
+        final item = snapshot.data;
         final children = <Widget>[
-          Text(snapshot.data.text),
+          ListTile(
+            title: buildText(item),
+            subtitle: item.by == "" ? Text("Deleted") : Text(item.by),
+            contentPadding: EdgeInsets.only(
+              right: 16.0,
+              left: depth * 16.0,
+            ),
+          ),
+          Divider(),
         ];
         snapshot.data.kids.forEach((kidId) {
           children.add(
             Comment(
               itemId: kidId,
               itemMap: itemMap,
+              depth: depth + 1,
             ),
           );
         });
@@ -33,5 +45,13 @@ class Comment extends StatelessWidget {
         );
       },
     );
+  }
+
+  Widget buildText(ItemModel item) {
+    final text = Html(
+      data: item.text,
+    );
+
+    return text;
   }
 }
